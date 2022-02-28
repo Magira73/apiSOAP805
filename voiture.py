@@ -46,11 +46,11 @@ if __name__=='__main__':
   application = Application([Voiture], 'org.temporary.soap',
                in_protocol=Soap11(), out_protocol=Soap11())
 
-  wsgi_application = WsgiApplication(application)
+  port = int(os.environ.get('PORT', 5000))
 
-  server = make_server('127.0.0.1', 8080, wsgi_application)
+  server = make_server('0.0.0.0', port, WsgiApplication(application))
 
-  print ("listening to http://127.0.0.1:%s" % 8080)
-  print ("wsdl is at: http://127.0.0.1:%s/?wsdl" % 8080)
+  print ("listening to http://0.0.0.0:%s" % port)
+  print ("wsdl is at: http://0.0.0.0:%s/?wsdl" % port)
 
   server.serve_forever()
